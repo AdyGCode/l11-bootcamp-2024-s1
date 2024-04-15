@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 use App\Events\ChirpCreated;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Chirp extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable=[
         'message',

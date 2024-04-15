@@ -20,7 +20,7 @@
                            :messages="$errors->get('message')"></x-input-error>
 
             <x-primary-button class="mt-4">{{ __('Chirp!') }}</x-primary-button>
-
+            <x-primary-button class="mt-4 bg-red-500">{{ $trash->count() }}</x-primary-button>
         </form>
 
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">

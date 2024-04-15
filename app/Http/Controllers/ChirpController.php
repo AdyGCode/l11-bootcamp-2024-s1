@@ -17,7 +17,8 @@ class ChirpController extends Controller
     {
         //return response("Hello, world");
         $chirps = Chirp::with('user')->latest()->get();
-        return view("chirps.index", compact('chirps'));
+        $trash = Chirp::onlyTrashed()->latest()->get();
+        return view("chirps.index", compact(['chirps', 'trash']));
     }
 
     /**

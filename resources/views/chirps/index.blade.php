@@ -32,10 +32,40 @@
                             <h5>
                                 <span class="text-gray-800">{{ $chirp->user->name }}</span>
                                 <small class="ml-2 text-sm text-gray-600">
-                                    {{ $chirp->created_at->format('j M Y, g:i a') }}
+                                    {{ $chirp->created_at->diffForHumans() }}
                                 </small>
+                                @unless($chirp->created_at->eq($chirp->updated_at))
+                                    <small class="text-sm text-gray-600"> &middot; {{ __("edited") }}</small>
+                                @endunless
                             </h5>
+                            @if($chirp->user->is(auth()->user()))
+                                <x-dropdown>
+                                    <x-slot name="trigger">
+                                        <button>
+                                            V
+                                        </button>
+                                    </x-slot>
+                                    <x-slot name="content">
+                                        <x-dropdown-link :href="route('chirps.edit',$chirp)">
+                                            {{ __("Edit") }}
+                                        </x-dropdown-link>
+                                        <form method="POST"
+                                              action="{{ route('chirps.destroy', $chirp) }}">
+                                            @csrf
+                                            @method('delete')
+
+                                            <x-dropdown-link
+                                                :href="route('chirps.destroy',$chirp)"
+                                                onclick="event.preventDefault(); this.closest('form').submit();"
+                                            >
+                                                {{ __('Delete') }}
+                                            </x-dropdown-link>
+                                        </form>
+                                    </x-slot>
+                                </x-dropdown>
+                            @endif
                         </div>
+
                         <p class="mt-4 text-lg text-gray-900">{{  $chirp->message }}</p>
                     </div>
                 </section>
